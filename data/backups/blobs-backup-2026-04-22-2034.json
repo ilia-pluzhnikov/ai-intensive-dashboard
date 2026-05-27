@@ -1,0 +1,452 @@
+{
+  "cohort": "Поток #4",
+  "startDate": "2026-04-14",
+  "endDate": "2026-04-30",
+  "students": [
+    {
+      "id": "alexey",
+      "name": "Алексей",
+      "avatar": "Поток 4/alexey.webp"
+    },
+    {
+      "id": "anton_ryazanov",
+      "name": "Антон Р.",
+      "avatar": "Поток 4/anton_ryazanov.webp"
+    },
+    {
+      "id": "anton_kirillov",
+      "name": "Антон К.",
+      "avatar": "Поток 4/anton_kirillov.webp"
+    },
+    {
+      "id": "olya",
+      "name": "Оля",
+      "avatar": "Поток 4/olya.webp"
+    },
+    {
+      "id": "vladimir",
+      "name": "Владимир",
+      "avatar": "Поток 4/vladimir.webp"
+    },
+    {
+      "id": "yulia",
+      "name": "Юля",
+      "avatar": "Поток 4/yulia.webp"
+    },
+    {
+      "id": "margarita",
+      "name": "Маргарита",
+      "avatar": "Поток 4/margarita.webp"
+    },
+    {
+      "id": "anastasia",
+      "name": "Анастасия",
+      "avatar": "Поток 4/anastasia.webp"
+    },
+    {
+      "id": "dmitry",
+      "name": "Дмитрий",
+      "avatar": "Поток 4/dmitry.webp"
+    },
+    {
+      "id": "maxim",
+      "name": "Максим",
+      "avatar": "Поток 4/maxim.webp"
+    }
+  ],
+  "weeks": [
+    {
+      "week": 1,
+      "title": "НАСТРОЙКА",
+      "sections": [
+        {
+          "type": "call",
+          "id": "call-1",
+          "title": "СОЗВОН #1",
+          "date": "14 апр",
+          "tasks": [
+            {
+              "id": "call-1-present",
+              "title": "Присутствие",
+              "points": 1
+            }
+          ]
+        },
+        {
+          "type": "homework",
+          "after": "call-1",
+          "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #1",
+          "tasks": [
+            {
+              "id": "claude-pro",
+              "title": "Регистрация Claude Pro",
+              "points": 1
+            },
+            {
+              "id": "claude-desktop",
+              "title": "Claude Desktop установлен",
+              "points": 1
+            },
+            {
+              "id": "claude-cli",
+              "title": "Claude Code CLI установлен",
+              "points": 2
+            },
+            {
+              "id": "project-idea",
+              "title": "Проект: идея сформулирована",
+              "points": 1
+            }
+          ]
+        },
+        {
+          "type": "call",
+          "id": "call-2",
+          "title": "СОЗВОН #2",
+          "date": "17 апр",
+          "tasks": [
+            {
+              "id": "call-2-present",
+              "title": "Присутствие",
+              "points": 1
+            }
+          ]
+        },
+        {
+          "type": "homework",
+          "after": "call-2",
+          "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #2",
+          "tasks": [
+            {
+              "id": "terminal-basics",
+              "title": "Терминал: базовые команды",
+              "points": 1
+            },
+            {
+              "id": "claude-md",
+              "title": "CLAUDE.md создан",
+              "points": 2
+            },
+            {
+              "id": "prd-md",
+              "title": "PRD.md / описание продукта",
+              "points": 2
+            },
+            {
+              "id": "folder-structure",
+              "title": "Есть понятная структура папок",
+              "points": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "week": 2,
+      "title": "РАЗРАБОТКА",
+      "sections": [
+        {
+          "type": "call",
+          "id": "call-3",
+          "title": "СОЗВОН #3",
+          "date": "21 апр",
+          "tasks": [
+            {
+              "id": "call-3-present",
+              "title": "Присутствие",
+              "points": 1
+            }
+          ]
+        },
+        {
+          "type": "homework",
+          "after": "call-3",
+          "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #3",
+          "tasks": [
+            {
+              "id": "git-init",
+              "title": "Git инициализирован",
+              "points": 1
+            },
+            {
+              "id": "github-repo",
+              "title": "Проект залит на GitHub",
+              "points": 2
+            },
+            {
+              "id": "remote-commit",
+              "title": "Коммит с телефона или удалённо",
+              "points": 2
+            },
+            {
+              "id": "git-pull",
+              "title": "Git Pull изменений локально",
+              "points": 1
+            },
+            {
+              "id": "codex-cli",
+              "title": "★ Codex CLI установлен",
+              "points": 2
+            }
+          ]
+        },
+        {
+          "type": "call",
+          "id": "call-4",
+          "title": "СОЗВОН #4",
+          "date": "24 апр",
+          "tasks": [
+            {
+              "id": "call-4-present",
+              "title": "Присутствие",
+              "points": 1
+            }
+          ]
+        },
+        {
+          "type": "homework",
+          "after": "call-4",
+          "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #4",
+          "tasks": [
+            {
+              "id": "hook-created",
+              "title": "Хук или статус лайн настроен",
+              "points": 2
+            },
+            {
+              "id": "skill-written",
+              "title": "Skill: написан под свою задачу",
+              "points": 2
+            },
+            {
+              "id": "subagent-context",
+              "title": "Субагент vs прямой: сравнение /context",
+              "points": 1
+            },
+            {
+              "id": "builtin-commands",
+              "title": "Команды /btw, /rename, /resume",
+              "points": 1
+            },
+            {
+              "id": "custom-subagent",
+              "title": "★ Свой субагент создан",
+              "points": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "week": 3,
+      "title": "ФИНИШ",
+      "sections": [
+        {
+          "type": "call",
+          "id": "call-5",
+          "title": "СОЗВОН #5",
+          "date": "28 апр",
+          "tasks": [
+            {
+              "id": "call-5-present",
+              "title": "Присутствие",
+              "points": 1
+            }
+          ]
+        },
+        {
+          "type": "homework",
+          "after": "call-5",
+          "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #5",
+          "tasks": [
+            {
+              "id": "first-deploy",
+              "title": "Первый деплой на домен",
+              "points": 3
+            },
+            {
+              "id": "mvp-working",
+              "title": "MVP функционирует",
+              "points": 5
+            },
+            {
+              "id": "notebook-lm",
+              "title": "★ NotebookLM: попробовать",
+              "points": 1
+            },
+            {
+              "id": "demo-doc",
+              "title": "Документ к демо (5 вопросов)",
+              "points": 2
+            },
+            {
+              "id": "demo-scenario",
+              "title": "Пользовательский сценарий для демо",
+              "points": 2
+            },
+            {
+              "id": "building-in-public",
+              "title": "Building in Public пост",
+              "points": 2
+            }
+          ]
+        },
+        {
+          "type": "call",
+          "id": "call-6",
+          "title": "СОЗВОН #6 — ДЕМО-ДЕНЬ",
+          "date": "30 апр",
+          "tasks": [
+            {
+              "id": "call-6-present",
+              "title": "Присутствие",
+              "points": 1
+            },
+            {
+              "id": "demo-shown",
+              "title": "Демо показано",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "type": "call",
+          "id": "consultation",
+          "title": "1-НА-1 КОНСУЛЬТАЦИЯ",
+          "tasks": [
+            {
+              "id": "consultation-done",
+              "title": "Проведена",
+              "points": 2
+            }
+          ]
+        },
+        {
+          "type": "homework",
+          "title": "ИСПОЛЬЗОВАНИЕ CLAUDE CODE",
+          "tasks": [
+            {
+              "id": "session-limit",
+              "title": "Скриншот. Лимит 5ч сессии — 100%",
+              "points": 2
+            },
+            {
+              "id": "weekly-limit",
+              "title": "Скриншот. Недельный лимит — 100%",
+              "points": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "checkins": {
+    "alexey": [
+      "call-1-present",
+      "claude-pro",
+      "claude-desktop",
+      "project-idea",
+      "call-2-present",
+      "claude-md",
+      "folder-structure",
+      "call-3-present",
+      "claude-cli"
+    ],
+    "olya": [
+      "call-1-present",
+      "claude-pro",
+      "claude-desktop",
+      "project-idea",
+      "call-2-present",
+      "terminal-basics",
+      "claude-md",
+      "folder-structure",
+      "call-3-present",
+      "claude-cli"
+    ],
+    "vladimir": [
+      "claude-pro",
+      "claude-desktop",
+      "claude-cli",
+      "project-idea",
+      "call-2-present",
+      "claude-md",
+      "folder-structure",
+      "session-limit",
+      "call-3-present"
+    ],
+    "yulia": [
+      "call-1-present",
+      "claude-pro",
+      "call-2-present",
+      "project-idea",
+      "folder-structure",
+      "claude-md",
+      "claude-desktop",
+      "call-3-present"
+    ],
+    "margarita": [
+      "call-1-present",
+      "claude-pro",
+      "call-2-present",
+      "folder-structure",
+      "claude-md",
+      "session-limit",
+      "claude-desktop",
+      "call-3-present",
+      "project-idea",
+      "claude-cli"
+    ],
+    "anastasia": [
+      "call-1-present",
+      "claude-pro",
+      "call-2-present",
+      "claude-desktop",
+      "claude-cli",
+      "claude-md",
+      "folder-structure",
+      "call-3-present"
+    ],
+    "dmitry": [
+      "call-1-present",
+      "claude-pro",
+      "project-idea",
+      "call-2-present",
+      "claude-desktop",
+      "session-limit",
+      "claude-md",
+      "folder-structure",
+      "call-3-present",
+      "claude-cli"
+    ],
+    "maxim": [
+      "project-idea",
+      "claude-pro",
+      "call-2-present",
+      "call-3-present"
+    ],
+    "anton_ryazanov": [
+      "call-1-present",
+      "claude-pro",
+      "claude-desktop",
+      "call-2-present",
+      "project-idea",
+      "claude-md",
+      "folder-structure",
+      "call-3-present",
+      "claude-cli"
+    ],
+    "anton_kirillov": [
+      "call-1-present",
+      "claude-pro",
+      "claude-desktop",
+      "claude-cli",
+      "project-idea",
+      "call-2-present",
+      "claude-md",
+      "prd-md",
+      "folder-structure",
+      "call-3-present"
+    ]
+  }
+}
