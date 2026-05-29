@@ -42,6 +42,26 @@ async function loadData() {
 }
 
 /**
+ * Escape HTML and render light markdown: URLs → links, **bold**, \n → <br>
+ */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function renderRichText(str) {
+  let safe = escapeHtml(str);
+  safe = safe.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  safe = safe.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  safe = safe.replace(/\n/g, '<br>');
+  return safe;
+}
+
+/**
  * Get all tasks from nested weeks structure
  */
 function getAllTasks() {
@@ -270,6 +290,14 @@ function renderCheckinsTable() {
             <td class="homework-title" colspan="${studentCount + 1}">${section.title}:</td>
           </tr>
         `;
+
+        if (section.description && section.description.trim()) {
+          html += `
+            <tr class="homework-description">
+              <td colspan="${studentCount + 1}">${renderRichText(section.description)}</td>
+            </tr>
+          `;
+        }
 
         section.tasks.forEach(task => {
           html += renderTaskRow(task, true);

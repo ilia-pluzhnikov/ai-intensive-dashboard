@@ -28,6 +28,72 @@ async function loadData() {
 }
 
 /**
+ * Escape HTML and render light markdown: URLs → links, **bold**, \n → <br>
+ */
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function renderRichText(str) {
+  let safe = escapeHtml(str);
+  safe = safe.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>');
+  safe = safe.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  safe = safe.replace(/\n/g, '<br>');
+  return safe;
+}
+
+/**
+ * Open inline textarea to edit a homework section's description.
+ * weekIdx / sectionIdx address the section in cohortData.weeks[].sections[].
+ */
+function editDescription(weekIdx, sectionIdx) {
+  const section = cohortData.weeks[weekIdx].sections[sectionIdx];
+  const td = document.querySelector(
+    `tr.homework-description[data-week="${weekIdx}"][data-section="${sectionIdx}"] td`
+  );
+  if (!td) return;
+
+  const current = section.description || '';
+  td.innerHTML = `<textarea class="description-edit" rows="5" placeholder="Опиши задание: что сделать, ссылки, дедлайн. Поддерживается **жирный**, переносы строк и https-ссылки.">${escapeHtml(current)}</textarea>`;
+  const textarea = td.querySelector('textarea');
+  // Prevent bubbling to <td onclick=editDescription>, which would rebuild the textarea and wipe input
+  textarea.addEventListener('click', (e) => e.stopPropagation());
+  textarea.focus();
+  textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+
+  let committed = false;
+  const commit = (save) => {
+    if (committed) return;
+    committed = true;
+    if (save) {
+      const next = textarea.value;
+      if (next !== current) {
+        section.description = next;
+        hasChanges = true;
+        updateSaveButton();
+      }
+    }
+    renderTable();
+  };
+
+  textarea.addEventListener('blur', () => commit(true));
+  textarea.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      commit(false);
+    } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      textarea.blur();
+    }
+  });
+}
+
+/**
  * Get all tasks from nested weeks structure
  */
 function getAllTasks() {
@@ -182,7 +248,7 @@ function renderTable() {
     <tbody>
   `;
 
-  cohortData.weeks.forEach(week => {
+  cohortData.weeks.forEach((week, weekIdx) => {
     // Week header
     html += `
       <tr class="week-header">
@@ -190,7 +256,7 @@ function renderTable() {
       </tr>
     `;
 
-    week.sections.forEach(section => {
+    week.sections.forEach((section, sectionIdx) => {
       if (section.type === 'call') {
         const dateStr = section.date ? ` (${section.date})` : '';
         html += `
@@ -207,6 +273,18 @@ function renderTable() {
         html += `
           <tr class="homework-header">
             <td class="homework-title" colspan="${studentCount + 1}">${section.title}:</td>
+          </tr>
+        `;
+
+        const hasDesc = section.description && section.description.trim();
+        const descBody = hasDesc
+          ? renderRichText(section.description)
+          : '<span class="placeholder">+ добавить описание</span>';
+        html += `
+          <tr class="homework-description editable" data-week="${weekIdx}" data-section="${sectionIdx}">
+            <td colspan="${studentCount + 1}" onclick="editDescription(${weekIdx}, ${sectionIdx})">
+              ${descBody}
+            </td>
           </tr>
         `;
 

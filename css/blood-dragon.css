@@ -686,6 +686,68 @@ header .subtitle {
   vertical-align: middle;
 }
 
+/* Homework description block (free-form text under the section header) */
+.checkins-table tr.homework-description td {
+  padding: 0.4rem 1rem 0.8rem 2rem;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  line-height: 1.55;
+  text-align: left;
+  background: rgba(255, 0, 255, 0.04);
+  border-left: 2px solid var(--neon-magenta);
+  border-bottom: none;
+  white-space: normal;
+}
+
+.checkins-table tr.homework-description td a {
+  color: var(--neon-cyan);
+  text-decoration: underline;
+  word-break: break-all;
+}
+
+.checkins-table tr.homework-description td a:hover {
+  text-shadow: 0 0 8px var(--neon-cyan);
+}
+
+.checkins-table tr.homework-description td strong {
+  color: var(--neon-yellow);
+  font-weight: 600;
+}
+
+.checkins-table tr.homework-description.editable td {
+  cursor: text;
+  transition: background 0.15s ease;
+}
+
+.checkins-table tr.homework-description.editable td:hover {
+  background: rgba(255, 0, 255, 0.1);
+}
+
+.checkins-table tr.homework-description .placeholder {
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+.description-edit {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--bg-dark);
+  border: 1px solid var(--neon-magenta);
+  color: var(--text-primary);
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  border-radius: 2px;
+  resize: vertical;
+}
+
+.description-edit:focus {
+  outline: none;
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+}
+
 /* ===========================================
    ADMIN STYLES
    =========================================== */
