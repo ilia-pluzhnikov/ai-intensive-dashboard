@@ -7,12 +7,13 @@
     { "id": "baurzhan", "name": "Бауржан", "avatar": "Поток 5/baurzhan.webp" },
     { "id": "vlad", "name": "Влад", "avatar": "Поток 5/vlad.webp" },
     { "id": "artem", "name": "Артём", "avatar": "Поток 5/artem.webp" },
-    { "id": "ilya_balobanov", "name": "Илья Б.", "avatar": "rex.webp" },
+    { "id": "ilya_balobanov", "name": "Илья Б.", "avatar": "Поток 5/ilya_balobanov.webp" },
     { "id": "anya", "name": "Аня", "avatar": "Поток 5/anya.webp" },
     { "id": "anton", "name": "Антон", "avatar": "Поток 5/anton.webp" },
-    { "id": "vyacheslav", "name": "Вячеслав", "avatar": "rex.webp" },
-    { "id": "lilia", "name": "Лилия", "avatar": "rex.webp" },
-    { "id": "mariya", "name": "Мария", "avatar": "rex.webp" }
+    { "id": "vyacheslav", "name": "Вячеслав", "avatar": "Поток 5/vyacheslav.webp" },
+    { "id": "lilia", "name": "Лилия", "avatar": "Поток 5/lilia.webp" },
+    { "id": "mariya", "name": "Мария", "avatar": "Поток 5/mariya.webp" },
+    { "id": "andrey", "name": "Андрей", "avatar": "Поток 5/andrey.webp" }
   ],
   "weeks": [
     {
@@ -175,6 +176,7 @@
     "anton": [],
     "vyacheslav": [],
     "lilia": [],
-    "mariya": []
+    "mariya": [],
+    "andrey": []
   }
 }
