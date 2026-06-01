@@ -7,7 +7,7 @@
     { "id": "baurzhan", "name": "Бауржан", "avatar": "Поток 5/baurzhan.webp" },
     { "id": "vlad", "name": "Влад", "avatar": "Поток 5/vlad.webp" },
     { "id": "artem", "name": "Артём", "avatar": "Поток 5/artem.webp" },
-    { "id": "ilya_balobanov", "name": "Илья Б.", "avatar": "Поток 5/ilya_balobanov.webp" },
+    { "id": "ilya_balobanov", "name": "Илья", "avatar": "Поток 5/ilya_balobanov.webp" },
     { "id": "anya", "name": "Аня", "avatar": "Поток 5/anya.webp" },
     { "id": "anton", "name": "Антон", "avatar": "Поток 5/anton.webp" },
     { "id": "vyacheslav", "name": "Вячеслав", "avatar": "Поток 5/vyacheslav.webp" },
@@ -34,6 +34,7 @@
           "after": "call-1",
           "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #1",
           "tasks": [
+            { "id": "who-is-who", "title": "Написали о себе в чат «Кто есть кто»", "points": 1 },
             { "id": "claude-pro", "title": "Регистрация Claude Pro", "points": 1 },
             { "id": "claude-desktop", "title": "Claude Desktop установлен", "points": 1 },
             { "id": "claude-cli", "title": "Claude Code CLI установлен", "points": 2 },
@@ -54,7 +55,6 @@
           "after": "call-2",
           "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #2",
           "tasks": [
-            { "id": "terminal-basics", "title": "Терминал: базовые команды", "points": 1 },
             { "id": "claude-md", "title": "CLAUDE.md создан", "points": 2 },
             { "id": "prd-md", "title": "PRD.md / описание продукта", "points": 2 },
             { "id": "folder-structure", "title": "Есть понятная структура папок", "points": 1 }
@@ -80,6 +80,7 @@
           "after": "call-3",
           "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #3",
           "tasks": [
+            { "id": "terminal-basics", "title": "Терминал: базовые команды", "points": 1 },
             { "id": "git-init", "title": "Git инициализирован", "points": 1 },
             { "id": "github-repo", "title": "Проект залит на GitHub", "points": 2 },
             { "id": "remote-commit", "title": "Коммит с телефона или удалённо", "points": 2 },
