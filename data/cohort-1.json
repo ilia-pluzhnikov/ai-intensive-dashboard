@@ -84,7 +84,7 @@
             { "id": "github-repo", "title": "★ Проект залит на GitHub", "points": 2 },
             { "id": "remote-commit", "title": "Коммит с телефона или удалённо", "points": 2 },
             { "id": "git-pull", "title": "Git Pull изменений локально", "points": 1 },
-            { "id": "codex-cli", "title": "Codex|Антигравити установлены", "points": 2 },
+            { "id": "codex-cli", "title": "Codex|Антигравити установлены", "points": 2, "optional": true },
             { "id": "scheduler-setup", "title": "Scheduler настроен", "points": 2 }
           ]
         },
