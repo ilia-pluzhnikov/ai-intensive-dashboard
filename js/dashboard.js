@@ -92,7 +92,9 @@ function getStudentPoints(studentId) {
  * Get max possible points
  */
 function getMaxPoints() {
-  return getAllTasks().reduce((sum, task) => sum + task.points, 0) + BONUS_POINTS;
+  return getAllTasks()
+    .filter(task => !task.optional)
+    .reduce((sum, task) => sum + task.points, 0) + BONUS_POINTS;
 }
 
 /**
@@ -114,7 +116,8 @@ function getDragonPosition() {
 function getStudentPosition(studentId) {
   const points = getStudentPoints(studentId);
   const maxPoints = getMaxPoints();
-  return (points / maxPoints) * 100;
+  // Optional tasks add bonus points beyond maxPoints, so a completionist can exceed 100% — clamp to the finish line
+  return Math.min(100, (points / maxPoints) * 100);
 }
 
 /**
@@ -326,7 +329,10 @@ function renderCheckinsTable() {
  */
 function renderTaskRow(task, indent = false) {
   let html = `<tr class="${indent ? 'homework-task' : 'call-task'}">`;
-  html += `<td class="task-name ${indent ? 'indented' : ''}">${task.title}</td>`;
+  const optBadge = task.optional
+    ? ' <span class="opt-badge" title="Опционально — не входит в максимум баллов, но даёт бонусные очки">опционально</span>'
+    : '';
+  html += `<td class="task-name ${indent ? 'indented' : ''}">${task.title}${optBadge}</td>`;
 
   cohortData.students.forEach(student => {
     const checkins = cohortData.checkins[student.id] || [];

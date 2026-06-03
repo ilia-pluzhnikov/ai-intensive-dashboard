@@ -37,8 +37,8 @@
             { "id": "who-is-who", "title": "Написали о себе в чат «Кто есть кто»", "points": 1 },
             { "id": "claude-pro", "title": "Регистрация Claude Pro", "points": 1 },
             { "id": "claude-desktop", "title": "Claude Desktop установлен", "points": 1 },
-            { "id": "claude-cli", "title": "Claude Code CLI установлен", "points": 2 },
-            { "id": "project-idea", "title": "Проект: идея сформулирована", "points": 1 }
+            { "id": "claude-cli", "title": "Claude Code CLI установлен", "points": 2, "optional": true },
+            { "id": "project-idea", "title": "★ Проект: идея сформулирована", "points": 1 }
           ]
         },
         {
@@ -55,8 +55,8 @@
           "after": "call-2",
           "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #2",
           "tasks": [
-            { "id": "claude-md", "title": "CLAUDE.md создан", "points": 2 },
-            { "id": "prd-md", "title": "PRD.md / описание продукта", "points": 2 },
+            { "id": "claude-md", "title": "★ CLAUDE.md создан", "points": 2 },
+            { "id": "prd-md", "title": "Написаны файлы Design_System / Architecture / PRD", "points": 2 },
             { "id": "folder-structure", "title": "Есть понятная структура папок", "points": 1 }
           ]
         }
@@ -80,12 +80,11 @@
           "after": "call-3",
           "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #3",
           "tasks": [
-            { "id": "terminal-basics", "title": "Терминал: базовые команды", "points": 1 },
             { "id": "git-init", "title": "Git инициализирован", "points": 1 },
-            { "id": "github-repo", "title": "Проект залит на GitHub", "points": 2 },
+            { "id": "github-repo", "title": "★ Проект залит на GitHub", "points": 2 },
             { "id": "remote-commit", "title": "Коммит с телефона или удалённо", "points": 2 },
             { "id": "git-pull", "title": "Git Pull изменений локально", "points": 1 },
-            { "id": "codex-cli", "title": "★ Codex CLI установлен", "points": 2 },
+            { "id": "codex-cli", "title": "Codex|Антигравити установлены", "points": 2 },
             { "id": "scheduler-setup", "title": "Scheduler настроен", "points": 2 }
           ]
         },
@@ -104,10 +103,10 @@
           "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #4",
           "tasks": [
             { "id": "hook-created", "title": "Хук или статус лайн настроен", "points": 2 },
-            { "id": "skill-written", "title": "Skill: написан под свою задачу", "points": 2 },
+            { "id": "skill-written", "title": "★ Skill: написан под свою задачу", "points": 2 },
             { "id": "subagent-context", "title": "Субагент vs прямой: сравнение /context", "points": 1 },
             { "id": "builtin-commands", "title": "Команды /btw, /rename, /resume", "points": 1 },
-            { "id": "custom-subagent", "title": "★ Свой субагент создан", "points": 2 }
+            { "id": "custom-subagent", "title": "Свой субагент создан", "points": 2 }
           ]
         }
       ]
@@ -130,9 +129,9 @@
           "after": "call-5",
           "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #5",
           "tasks": [
-            { "id": "first-deploy", "title": "Первый деплой на домен", "points": 3 },
+            { "id": "first-deploy", "title": "★ Первый деплой на домен", "points": 3 },
             { "id": "mvp-working", "title": "MVP функционирует", "points": 5 },
-            { "id": "notebook-lm", "title": "★ NotebookLM: попробовать", "points": 1 },
+            { "id": "notebook-lm", "title": "NotebookLM: попробовать", "points": 1 },
             { "id": "demo-doc", "title": "Документ к демо (5 вопросов)", "points": 2 },
             { "id": "demo-scenario", "title": "Пользовательский сценарий для демо", "points": 2 },
             { "id": "building-in-public", "title": "Building in Public пост", "points": 2 }
@@ -145,7 +144,7 @@
           "date": "12 июня",
           "tasks": [
             { "id": "call-6-present", "title": "Присутствие", "points": 1 },
-            { "id": "demo-shown", "title": "Демо показано", "points": 5 }
+            { "id": "demo-shown", "title": "★ Демо показано", "points": 5 }
           ]
         },
         {

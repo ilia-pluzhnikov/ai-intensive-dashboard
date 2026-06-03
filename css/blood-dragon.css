@@ -602,6 +602,24 @@ header .subtitle {
   color: var(--text-primary);
 }
 
+/* Optional (bonus) task badge — task counts as extra, not toward max points */
+.opt-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 8px;
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--neon-cyan);
+  border: 1px solid var(--neon-cyan);
+  border-radius: 999px;
+  vertical-align: middle;
+  white-space: nowrap;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
+  text-shadow: 0 0 6px rgba(0, 240, 255, 0.6);
+}
+
 /* Check marks */
 .check {
   font-size: 1.2rem;

@@ -123,7 +123,9 @@ function getStudentPoints(studentId) {
  * Get max possible points
  */
 function getMaxPoints() {
-  return getAllTasks().reduce((sum, task) => sum + task.points, 0);
+  return getAllTasks()
+    .filter(task => !task.optional)
+    .reduce((sum, task) => sum + task.points, 0);
 }
 
 /**
@@ -212,7 +214,10 @@ function showNotification(message) {
  */
 function renderTaskRow(task, indent = false) {
   let html = `<tr class="${indent ? 'homework-task' : 'call-task'}">`;
-  html += `<td class="task-name ${indent ? 'indented' : ''}">${task.title} <span style="color: var(--text-dim)">(+${task.points})</span></td>`;
+  const optBadge = task.optional
+    ? ' <span class="opt-badge" title="Опционально — не входит в максимум баллов, но даёт бонусные очки">опционально</span>'
+    : '';
+  html += `<td class="task-name ${indent ? 'indented' : ''}">${task.title}${optBadge} <span style="color: var(--text-dim)">(+${task.points})</span></td>`;
 
   cohortData.students.forEach(student => {
     const checkins = cohortData.checkins[student.id] || [];
