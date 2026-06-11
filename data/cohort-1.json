@@ -133,8 +133,7 @@
             { "id": "mvp-working", "title": "MVP функционирует", "points": 5 },
             { "id": "notebook-lm", "title": "NotebookLM: попробовать", "points": 1 },
             { "id": "demo-doc", "title": "Документ к демо (5 вопросов)", "points": 2 },
-            { "id": "demo-scenario", "title": "Пользовательский сценарий для демо", "points": 2 },
-            { "id": "building-in-public", "title": "Building in Public пост", "points": 2 }
+            { "id": "demo-scenario", "title": "Пользовательский сценарий для демо", "points": 2 }
           ]
         },
         {
