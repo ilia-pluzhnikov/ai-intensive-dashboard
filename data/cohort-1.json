@@ -28,10 +28,9 @@
           "after": "call-1",
           "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #1",
           "tasks": [
-            { "id": "who-is-who", "title": "Написали о себе в чат «Кто есть кто»", "points": 1 },
-            { "id": "claude-pro", "title": "Регистрация Claude Pro", "points": 1 },
-            { "id": "claude-desktop", "title": "Claude Desktop установлен", "points": 1 },
-            { "id": "claude-cli", "title": "Claude Code CLI установлен", "points": 2, "optional": true },
+            { "id": "claude-pro", "title": "Регистрация и оплата Claude / Codex", "points": 1 },
+            { "id": "claude-desktop", "title": "Claude Desktop / Codex установлены", "points": 1 },
+            { "id": "claude-cli", "title": "Claude Code/Codex CLI установлены", "points": 2, "optional": true },
             { "id": "project-idea", "title": "★ Проект: идея сформулирована", "points": 1 }
           ]
         },
@@ -49,9 +48,9 @@
           "after": "call-2",
           "title": "ДОМАШКА ПОСЛЕ СОЗВОНА #2",
           "tasks": [
-            { "id": "claude-md", "title": "★ CLAUDE.md создан", "points": 2 },
-            { "id": "prd-md", "title": "Написаны файлы Design_System / Architecture / PRD", "points": 2 },
-            { "id": "folder-structure", "title": "Есть понятная структура папок", "points": 1 }
+            { "id": "claude-md", "title": "★ Созданы Claude.md/Agents.md", "points": 2 },
+            { "id": "prd-md", "title": "Написаны файлы Design_System / Architecture / PRD", "points": 2, "optional": true },
+            { "id": "folder-structure", "title": "У проекта понятная структура файлов и папок", "points": 1 }
           ]
         }
       ]
@@ -78,8 +77,8 @@
             { "id": "github-repo", "title": "★ Проект залит на GitHub", "points": 2 },
             { "id": "remote-commit", "title": "Коммит с телефона или удалённо", "points": 2 },
             { "id": "git-pull", "title": "Git Pull изменений локально", "points": 1 },
-            { "id": "codex-cli", "title": "Codex|Антигравити установлены", "points": 2, "optional": true },
-            { "id": "scheduler-setup", "title": "Scheduler настроен", "points": 2 }
+            { "id": "codex-cli", "title": "VS code / Antigravity установлены", "points": 2, "optional": true },
+            { "id": "scheduler-setup", "title": "Scheduler настроен", "points": 2, "optional": true }
           ]
         },
         {
