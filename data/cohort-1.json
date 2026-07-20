@@ -1,7 +1,7 @@
 {
   "cohort": "Поток #6",
   "startDate": "2026-06-30",
-  "endDate": "2026-07-17",
+  "endDate": "2026-07-27",
   "students": [
     { "id": "aleksandr", "name": "Александр", "avatar": "Поток 6/aleksandr.webp" },
     { "id": "andrey", "name": "Андрей", "avatar": "Поток 6/andrey.webp" },
@@ -106,7 +106,7 @@
     },
     {
       "week": 3,
-      "title": "ФИНИШ",
+      "title": "ДЕПЛОЙ",
       "sections": [
         {
           "type": "call",
@@ -124,18 +124,60 @@
           "tasks": [
             { "id": "first-deploy", "title": "★ Первый деплой на домен", "points": 3 },
             { "id": "mvp-working", "title": "MVP функционирует", "points": 5 },
-            { "id": "notebook-lm", "title": "NotebookLM: попробовать", "points": 1 },
+            { "id": "notebook-lm", "title": "NotebookLM: попробовать", "points": 1 }
+          ]
+        },
+        {
+          "type": "call",
+          "id": "call-6",
+          "title": "СОЗВОН #6",
+          "date": "17 июля",
+          "tasks": [
+            { "id": "call-6-present", "title": "Присутствие", "points": 1 }
+          ]
+        }
+      ]
+    },
+    {
+      "week": 4,
+      "title": "СВОЙ АГЕНТ В ПРОДЕ",
+      "sections": [
+        {
+          "type": "call",
+          "id": "call-7",
+          "title": "СОЗВОН #7",
+          "date": "21 июля",
+          "tasks": [
+            { "id": "call-7-present", "title": "Присутствие", "points": 1 }
+          ]
+        },
+        {
+          "type": "homework",
+          "after": "call-7",
+          "title": "ДОМАШКА: СВОЙ АГЕНТ В ПРОДЕ",
+          "tasks": [
+            { "id": "prod-vps", "title": "Взят свой VPS", "points": 1, "optional": true },
+            { "id": "prod-hermes-tg", "title": "★ Hermes на VPS + подключён к Telegram", "points": 3, "optional": true },
+            { "id": "prod-github", "title": "Интеграция с GitHub", "points": 2, "optional": true },
+            { "id": "prod-agent-md", "title": "Заполнены AGENTS / MEMORY / SOUL / TOOLS.md", "points": 2, "optional": true }
+          ]
+        },
+        {
+          "type": "homework",
+          "after": "call-7",
+          "title": "ПОДГОТОВКА К ДЕМО",
+          "tasks": [
             { "id": "demo-doc", "title": "Документ к демо (5 вопросов)", "points": 2 },
             { "id": "demo-scenario", "title": "Пользовательский сценарий для демо", "points": 2 }
           ]
         },
         {
           "type": "call",
-          "id": "call-6",
-          "title": "СОЗВОН #6 — ДЕМО-ДЕНЬ",
-          "date": "17 июля",
+          "id": "call-8",
+          "title": "СОЗВОН #8 — ДЕМО-ДЕНЬ",
+          "date": "24 июля",
           "tasks": [
-            { "id": "call-6-present", "title": "Присутствие", "points": 1 },
+            { "id": "call-8-present", "title": "Присутствие", "points": 1 },
             { "id": "demo-shown", "title": "★ Демо показано", "points": 5 }
           ]
         },
@@ -144,7 +186,7 @@
           "id": "consultation",
           "title": "1-НА-1 КОНСУЛЬТАЦИЯ",
           "tasks": [
-            { "id": "consultation-done", "title": "Проведена", "points": 2 }
+            { "id": "consultation-done", "title": "Проведена", "points": 2, "optional": true }
           ]
         },
         {

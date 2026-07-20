@@ -166,9 +166,7 @@ function renderProgressBar() {
   // Week markers
   track.innerHTML += `
     <div class="week-markers">
-      <div class="week-marker">Week 1</div>
-      <div class="week-marker">Week 2</div>
-      <div class="week-marker">Week 3</div>
+      ${cohortData.weeks.map(w => `<div class="week-marker">Week ${w.week}</div>`).join('')}
     </div>
   `;
 
