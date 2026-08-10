@@ -1,13 +1,18 @@
 {
-  "cohort": "Поток #6",
-  "startDate": "2026-06-30",
-  "endDate": "2026-07-27",
+  "cohort": "Поток #7",
+  "startDate": "2026-08-04",
+  "endDate": "2026-08-28",
   "students": [
-    { "id": "aleksandr", "name": "Александр", "avatar": "Поток 6/aleksandr.webp" },
-    { "id": "andrey", "name": "Андрей", "avatar": "Поток 6/andrey.webp" },
-    { "id": "aleksandra", "name": "Александра", "avatar": "Поток 6/aleksandra.webp" },
-    { "id": "yaroslav", "name": "Ярослав", "avatar": "Поток 6/yaroslav.webp" },
-    { "id": "anastasia", "name": "Анастасия", "avatar": "Поток 6/anastasia.webp" }
+    { "id": "anastasia_sabaiclay", "name": "Анастасия", "avatar": "Avatar Female 1.webp" },
+    { "id": "yulia_konsultanspa", "name": "Юлия", "avatar": "Avatar Female 2.webp" },
+    { "id": "nastya_hrsspa", "name": "Настя", "avatar": "Avatar Female 3.webp" },
+    { "id": "daria_koroleva", "name": "Дарья", "avatar": "Avatar Female 4.webp" },
+    { "id": "maxim_interpreter68", "name": "Максим", "avatar": "Avatar Male 1.webp" },
+    { "id": "marina_tatausaha", "name": "Марина", "avatar": "Avatar Female 5.webp" },
+    { "id": "pavel_pulang123", "name": "Павел", "avatar": "Avatar Male 2.webp" },
+    { "id": "inna_mitrabali", "name": "Инна · MitraBali", "avatar": "Avatar Female 6.webp" },
+    { "id": "inna_inti2567", "name": "Инна · Inti2567", "avatar": "Avatar Female 7.webp" },
+    { "id": "victor_algazin", "name": "Виктор", "avatar": "Avatar Male 3.webp" }
   ],
   "weeks": [
     {
@@ -18,7 +23,7 @@
           "type": "call",
           "id": "call-1",
           "title": "СОЗВОН #1",
-          "date": "30 июня",
+          "date": "4 августа",
           "tasks": [
             { "id": "call-1-present", "title": "Присутствие", "points": 1 }
           ]
@@ -38,7 +43,7 @@
           "type": "call",
           "id": "call-2",
           "title": "СОЗВОН #2",
-          "date": "3 июля",
+          "date": "7 августа",
           "tasks": [
             { "id": "call-2-present", "title": "Присутствие", "points": 1 }
           ]
@@ -63,7 +68,7 @@
           "type": "call",
           "id": "call-3",
           "title": "СОЗВОН #3",
-          "date": "7 июля",
+          "date": "11 августа",
           "tasks": [
             { "id": "call-3-present", "title": "Присутствие", "points": 1 }
           ]
@@ -85,7 +90,7 @@
           "type": "call",
           "id": "call-4",
           "title": "СОЗВОН #4",
-          "date": "10 июля",
+          "date": "14 августа",
           "tasks": [
             { "id": "call-4-present", "title": "Присутствие", "points": 1 }
           ]
@@ -112,7 +117,7 @@
           "type": "call",
           "id": "call-5",
           "title": "СОЗВОН #5",
-          "date": "14 июля",
+          "date": "18 августа",
           "tasks": [
             { "id": "call-5-present", "title": "Присутствие", "points": 1 }
           ]
@@ -131,7 +136,7 @@
           "type": "call",
           "id": "call-6",
           "title": "СОЗВОН #6",
-          "date": "17 июля",
+          "date": "21 августа",
           "tasks": [
             { "id": "call-6-present", "title": "Присутствие", "points": 1 }
           ]
@@ -146,7 +151,7 @@
           "type": "call",
           "id": "call-7",
           "title": "СОЗВОН #7",
-          "date": "21 июля",
+          "date": "25 августа",
           "tasks": [
             { "id": "call-7-present", "title": "Присутствие", "points": 1 }
           ]
@@ -175,7 +180,7 @@
           "type": "call",
           "id": "call-8",
           "title": "СОЗВОН #8 — ДЕМО-ДЕНЬ",
-          "date": "24 июля",
+          "date": "28 августа",
           "tasks": [
             { "id": "call-8-present", "title": "Присутствие", "points": 1 },
             { "id": "demo-shown", "title": "★ Демо показано", "points": 5 }
@@ -201,10 +206,15 @@
     }
   ],
   "checkins": {
-    "aleksandr": [],
-    "andrey": [],
-    "aleksandra": [],
-    "yaroslav": [],
-    "anastasia": []
+    "anastasia_sabaiclay": [],
+    "yulia_konsultanspa": [],
+    "nastya_hrsspa": [],
+    "daria_koroleva": [],
+    "maxim_interpreter68": [],
+    "marina_tatausaha": [],
+    "pavel_pulang123": [],
+    "inna_mitrabali": [],
+    "inna_inti2567": [],
+    "victor_algazin": []
   }
 }
