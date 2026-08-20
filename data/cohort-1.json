@@ -3,7 +3,6 @@
   "startDate": "2026-08-04",
   "endDate": "2026-08-28",
   "students": [
-    { "id": "anastasia_sabaiclay", "name": "Анастасия · Clay", "avatar": "Avatar Female 1.webp" },
     { "id": "yulia_konsultanspa", "name": "Юлия", "avatar": "Avatar Female 2.webp" },
     { "id": "nastya_hrsspa", "name": "Анастасия", "avatar": "Avatar Female 3.webp" },
     { "id": "daria_koroleva", "name": "Дарья", "avatar": "Avatar Female 8.webp" },
