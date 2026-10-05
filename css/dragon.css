@@ -172,10 +172,46 @@
   100% { filter: none; transform: translateX(0); }
 }
 
+/* Intro replay: everyone runs from the start line to today's positions.
+   --intro-ms / --intro-stagger come from INTRO_* in js/dashboard.js */
+.progress-track.intro .dragon,
+.progress-track.intro .student-marker {
+  transition: left var(--intro-ms, 2s) cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+
+.progress-track.intro .student-marker {
+  transition-delay: calc(var(--i, 0) * var(--intro-stagger, 80ms));
+}
+
+.progress-track.intro .danger-zone,
+.progress-track.intro .safe-zone {
+  transition: width var(--intro-ms, 2s) cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+
+.progress-track .student-marker.running .avatar {
+  animation: avatar-run 0.3s ease-in-out infinite;
+}
+
+@keyframes avatar-run {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Heavy stomping walk while the dragon runs in */
+.dragon-rig.is-walking { animation: dragon-stomp 0.42s ease-in-out infinite; }
+.dragon-rig.is-walking .head-idle { animation-duration: 0.84s; }
+
+@keyframes dragon-stomp {
+  0%, 50%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-5%) rotate(-1.5deg); }
+  75% { transform: translateY(-5%) rotate(1.5deg); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dragon-rig,
   .dragon-rig *,
-  .dragon-rig .eye::before {
+  .dragon-rig .eye::before,
+  .progress-track .student-marker.running .avatar {
     animation: none !important;
     transition: none !important;
   }

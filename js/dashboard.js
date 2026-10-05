@@ -13,11 +13,16 @@ const AVATAR_PATH = './assets/avatars/';
 const DRAGON_EXPONENT = 1.5;
 const DRAGON_MAX = 90; // dragon reaches 90%, not 100% — rescue zone
 
+// Intro replay: everyone runs from the start line to today's positions
+const INTRO_MS = 2000;
+const INTRO_STAGGER_MS = 80;
+
 // Bonus points for all students (hotfix)
 const BONUS_POINTS = 10;
 
 let cohortData = null;
 let hunter = null;
+let introPlayed = false;
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /**
@@ -158,14 +163,18 @@ function renderProgressBar() {
   if (hunter) hunter.stop();
 
   const dragonPos = getDragonPosition();
+  const playIntro = !introPlayed && !REDUCED_MOTION;
+  introPlayed = true;
 
   // Danger zone reaches the dragon's eye (--dragon-reach: css/dragon-rig.css)
   const dangerWidth = pos => `calc(${pos}% + var(--dragon-reach))`;
   const safeWidth = pos => `calc(90% - ${pos}% - var(--dragon-reach))`;
 
   let html = `
-    <div class="danger-zone" style="width: ${dangerWidth(dragonPos)}"></div>
-    <div class="safe-zone" style="width: ${safeWidth(dragonPos)}"></div>
+    <div class="danger-zone" style="width: ${dangerWidth(playIntro ? 0 : dragonPos)}"
+         data-final-width="${dangerWidth(dragonPos)}"></div>
+    <div class="safe-zone" style="width: ${safeWidth(playIntro ? 0 : dragonPos)}"
+         data-final-width="${safeWidth(dragonPos)}"></div>
     <img class="safe-zone-gift" src="assets/gift_only.png" alt="Приз">
     <div class="zone-label danger">Danger Zone</div>
     <div class="zone-label safe">Safe Zone</div>
@@ -193,10 +202,12 @@ function renderProgressBar() {
 
     const isDropped = state === 'dropped';
     const inDanger = !isDropped && (state === 'stressed' || state === 'bitten');
+    // Dropped students and zero-length runs stay put: no transition, no transitionend
+    const runs = playIntro && pos > 0 && !isDropped;
     html += `
       <div class="student-lane">
-        <div class="student-marker state-${state} ${isLeader && !isDropped ? 'leader' : ''}"
-             data-state="${state}" style="left: ${pos}%; --i: ${i}">
+        <div class="student-marker state-${state} ${isLeader && !isDropped ? 'leader' : ''} ${runs ? 'running' : ''}"
+             data-state="${state}" data-final-left="${pos}%" style="left: ${runs ? 0 : pos}%; --i: ${i}">
           <div class="avatar">
             <img src="${avatarSrc}" alt="${student.name}">
           </div>
@@ -213,14 +224,52 @@ function renderProgressBar() {
   // Living dragon: cutout rig (js/dragon.js)
   html += `
     <div class="dragon-lane">
-      <div class="dragon" style="left: ${dragonPos}%">
+      <div class="dragon" style="left: ${playIntro ? 0 : dragonPos}%" data-final-left="${dragonPos}%">
         ${DragonRig.buildRig()}
       </div>
     </div>
   `;
 
   track.innerHTML = html;
-  startHunting(track);
+  if (playIntro) playIntroRun(track, dragonPos > 0);
+  else startHunting(track);
+}
+
+/**
+ * Intro replay: markers start at the line, then transition to data-final-* values
+ */
+function playIntroRun(track, dragonMoves) {
+  const dragon = track.querySelector('.dragon');
+  const rig = track.querySelector('.dragon-rig');
+  track.style.setProperty('--intro-ms', INTRO_MS + 'ms');
+  track.style.setProperty('--intro-stagger', INTRO_STAGGER_MS + 'ms');
+  track.classList.add('intro');
+  if (dragonMoves) rig.classList.add('is-walking');
+
+  // Each runner stops hopping when its own run ends
+  track.querySelectorAll('.student-marker.running').forEach(marker => {
+    marker.addEventListener('transitionend', e => {
+      if (e.target === marker && e.propertyName === 'left') marker.classList.remove('running');
+    });
+  });
+  dragon.addEventListener('transitionend', e => {
+    if (e.target === dragon && e.propertyName === 'left') rig.classList.remove('is-walking');
+  });
+
+  // Two frames: let the start positions paint before moving to the real ones
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    track.querySelectorAll('[data-final-left]').forEach(el => { el.style.left = el.dataset.finalLeft; });
+    track.querySelectorAll('[data-final-width]').forEach(el => { el.style.width = el.dataset.finalWidth; });
+  }));
+
+  // Safety net for runs that never fire transitionend; the laser waits for the intro
+  const total = INTRO_MS + cohortData.students.length * INTRO_STAGGER_MS + 100;
+  setTimeout(() => {
+    track.classList.remove('intro');
+    rig.classList.remove('is-walking');
+    track.querySelectorAll('.student-marker.running').forEach(m => m.classList.remove('running'));
+    startHunting(track);
+  }, total);
 }
 
 /**
