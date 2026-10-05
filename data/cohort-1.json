@@ -1,17 +1,16 @@
 {
-  "cohort": "Поток #7",
-  "startDate": "2026-08-04",
-  "endDate": "2026-08-28",
+  "cohort": "Поток #8",
+  "startDate": "2026-09-30",
+  "endDate": "2026-10-23",
   "students": [
-    { "id": "yulia_konsultanspa", "name": "Юлия", "avatar": "Avatar Female 2.webp" },
-    { "id": "nastya_hrsspa", "name": "Анастасия", "avatar": "Avatar Female 3.webp" },
-    { "id": "daria_koroleva", "name": "Дарья", "avatar": "Avatar Female 8.webp" },
-    { "id": "maxim_interpreter68", "name": "Максим", "avatar": "Avatar Male 1.webp" },
-    { "id": "marina_tatausaha", "name": "Марина", "avatar": "Avatar Female 5.webp" },
-    { "id": "pavel_pulang123", "name": "Павел", "avatar": "Avatar Male 2.webp" },
-    { "id": "inna_mitrabali", "name": "Инна · MitraBali", "avatar": "Avatar Female 6.webp" },
-    { "id": "inna_inti2567", "name": "Инна · Inti2567", "avatar": "Avatar Female 7.webp" },
-    { "id": "victor_algazin", "name": "Виктор", "avatar": "Avatar Male 3.webp" }
+    { "id": "artur_photofominykh", "name": "Артур · PhotoFominykh", "avatar": "Avatar Male 1.webp" },
+    { "id": "vladislav_qwer6890", "name": "Владислав", "avatar": "Avatar Male 2.webp" },
+    { "id": "sergey_nonametrick", "name": "Сергей", "avatar": "Avatar Male 3.webp" },
+    { "id": "artur_vlasov", "name": "Артур · ArturVlasov", "avatar": "Avatar Male 4.webp" },
+    { "id": "andrei_kononov", "name": "Андрей", "avatar": "Avatar Male 5.webp" },
+    { "id": "radmir_rider_skyray", "name": "Радмир", "avatar": "Avatar Male 6.webp" },
+    { "id": "ruslan_lanoff", "name": "Руслан", "avatar": "Avatar Male 7.webp" },
+    { "id": "lyuba_myliber", "name": "Люба", "avatar": "Avatar Female 1.webp" }
   ],
   "weeks": [
     {
@@ -22,7 +21,7 @@
           "type": "call",
           "id": "call-1",
           "title": "СОЗВОН #1",
-          "date": "4 августа",
+          "date": "30 сентября",
           "tasks": [
             { "id": "call-1-present", "title": "Присутствие", "points": 1 }
           ]
@@ -42,7 +41,7 @@
           "type": "call",
           "id": "call-2",
           "title": "СОЗВОН #2",
-          "date": "7 августа",
+          "date": "2 октября",
           "tasks": [
             { "id": "call-2-present", "title": "Присутствие", "points": 1 }
           ]
@@ -67,7 +66,7 @@
           "type": "call",
           "id": "call-3",
           "title": "СОЗВОН #3",
-          "date": "11 августа",
+          "date": "6 октября",
           "tasks": [
             { "id": "call-3-present", "title": "Присутствие", "points": 1 }
           ]
@@ -89,7 +88,7 @@
           "type": "call",
           "id": "call-4",
           "title": "СОЗВОН #4",
-          "date": "14 августа",
+          "date": "9 октября",
           "tasks": [
             { "id": "call-4-present", "title": "Присутствие", "points": 1 }
           ]
@@ -116,7 +115,7 @@
           "type": "call",
           "id": "call-5",
           "title": "СОЗВОН #5",
-          "date": "18 августа",
+          "date": "13 октября",
           "tasks": [
             { "id": "call-5-present", "title": "Присутствие", "points": 1 }
           ]
@@ -135,7 +134,7 @@
           "type": "call",
           "id": "call-6",
           "title": "СОЗВОН #6",
-          "date": "21 августа",
+          "date": "16 октября",
           "tasks": [
             { "id": "call-6-present", "title": "Присутствие", "points": 1 }
           ]
@@ -150,7 +149,7 @@
           "type": "call",
           "id": "call-7",
           "title": "СОЗВОН #7",
-          "date": "25 августа",
+          "date": "20 октября",
           "tasks": [
             { "id": "call-7-present", "title": "Присутствие", "points": 1 }
           ]
@@ -179,7 +178,7 @@
           "type": "call",
           "id": "call-8",
           "title": "СОЗВОН #8 — ДЕМО-ДЕНЬ",
-          "date": "28 августа",
+          "date": "23 октября",
           "tasks": [
             { "id": "call-8-present", "title": "Присутствие", "points": 1 },
             { "id": "demo-shown", "title": "★ Демо показано", "points": 5 }
@@ -205,14 +204,13 @@
     }
   ],
   "checkins": {
-    "yulia_konsultanspa": [],
-    "nastya_hrsspa": [],
-    "daria_koroleva": [],
-    "maxim_interpreter68": [],
-    "marina_tatausaha": [],
-    "pavel_pulang123": [],
-    "inna_mitrabali": [],
-    "inna_inti2567": [],
-    "victor_algazin": []
+    "artur_photofominykh": [],
+    "vladislav_qwer6890": [],
+    "sergey_nonametrick": [],
+    "artur_vlasov": [],
+    "andrei_kononov": [],
+    "radmir_rider_skyray": [],
+    "ruslan_lanoff": [],
+    "lyuba_myliber": []
   }
 }
