@@ -166,9 +166,11 @@ function renderProgressBar() {
   const playIntro = !introPlayed && !REDUCED_MOTION;
   introPlayed = true;
 
-  // Danger zone reaches the dragon's eye (--dragon-reach: css/dragon-rig.css)
-  const dangerWidth = pos => `calc(${pos}% + var(--dragon-reach))`;
-  const safeWidth = pos => `calc(90% - ${pos}% - var(--dragon-reach))`;
+  // The rig never pokes past the finish line, even at DRAGON_MAX after the cohort ends;
+  // the danger zone reaches its eye (--rig-w, --dragon-reach: css/dragon-rig.css)
+  const dragonLeft = pos => `min(${pos}%, 100% - var(--rig-w))`;
+  const dangerWidth = pos => `calc(${dragonLeft(pos)} + var(--dragon-reach))`;
+  const safeWidth = pos => `calc(90% - ${dragonLeft(pos)} - var(--dragon-reach))`;
 
   let html = `
     <div class="danger-zone" style="width: ${dangerWidth(playIntro ? 0 : dragonPos)}"
@@ -224,7 +226,7 @@ function renderProgressBar() {
   // Living dragon: cutout rig (js/dragon.js)
   html += `
     <div class="dragon-lane">
-      <div class="dragon" style="left: ${playIntro ? 0 : dragonPos}%" data-final-left="${dragonPos}%">
+      <div class="dragon" style="left: ${dragonLeft(playIntro ? 0 : dragonPos)}" data-final-left="${dragonLeft(dragonPos)}">
         ${DragonRig.buildRig()}
       </div>
     </div>

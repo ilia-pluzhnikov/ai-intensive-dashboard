@@ -2,3 +2,4 @@
 .claude/
 *.csv
 live/
+__pycache__/
