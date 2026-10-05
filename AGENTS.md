@@ -43,10 +43,18 @@
 ├── data/
 │   └── cohort-1.json         # Данные потока (ученики, задания, прогресс)
 ├── css/
-│   └── blood-dragon.css
+│   ├── blood-dragon.css
+│   ├── dragon.css            # Риг дракона: покой, лазер, интро
+│   └── dragon-rig.css        # Геометрия рига — генерирует tools/dragon/cut.py
 ├── js/
 │   ├── dashboard.js
+│   ├── dragon.js             # Риг, выбор цели, лазер-охотник
 │   └── admin.js
+├── tests/
+│   └── dragon.test.js        # node --test tests/dragon.test.js
+├── tools/dragon/
+│   ├── cut.py                # Нарезка спрайта на слои рига
+│   └── source.png            # Исходный спрайт (в бакет не попадает)
 ├── yandex/
 │   └── save-function/
 │       └── index.js          # Yandex Cloud Function: сохранение из админки → live/data.json
@@ -54,7 +62,8 @@
 │   └── deploy-yc.yml         # Выкладка в бакет при push в main
 └── assets/
     ├── avatars/              # Аватары учеников
-    └── *.png                 # Спрайты дракона
+    ├── dragon/               # Слои рига (WebP), генерирует tools/dragon/cut.py
+    └── gift_only.png
 ```
 
 ## Данные
@@ -84,6 +93,23 @@ JSON-файл `data/cohort-1.json` содержит:
 - **Bitten** (красный) — дракон догнал
 - **Leader** (золотой) — первое место
 - **Dropped** (чёрный, 💀) — ученик выбыл (`"dropped": true` в данных)
+
+## Дракон
+
+Cutout-риг: исходный спрайт `tools/dragon/source.png` порезан на слои
+(`assets/dragon/*.webp`), которые двигают CSS-анимации (`css/dragon.css`).
+Дышит, качает хвостом, моргает; раз в 7–11 с (4–7 с, если кто-то в зоне
+опасности) стреляет лазером в ближайшего ученика впереди себя. При открытии
+страницы дракон и аватары добегают от старта до своих позиций (~2 с).
+
+- **Поменять нарезку** (полигоны частей, точки вращения, пасть) — константы в
+  `tools/dragon/cut.py`, затем `python tools/dragon/cut.py --check` (поза покоя
+  должна совпасть с исходником) и `python tools/dragon/cut.py` (слои +
+  `css/dragon-rig.css`). Руками `css/dragon-rig.css` не править.
+- **Посмотреть другой день потока:** `?now=2026-10-16` в адресе.
+- **Выстрелить вручную:** в консоли браузера `hunter.shootNow()`.
+- `prefers-reduced-motion` — дракон статичен, без интро и лазера.
+- Тесты логики: `node --test tests/dragon.test.js`.
 
 ## Деплой
 
