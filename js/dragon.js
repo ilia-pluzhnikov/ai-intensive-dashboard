@@ -21,16 +21,18 @@
   const BEAM_FADE_MS = 150;
 
   /**
-   * Who the dragon shoots: the nearest student ahead of its eye;
-   * nobody ahead — the nearest one behind. Dropped and finished are safe.
-   * candidates: [{ x, state }], x — avatar centre in track px
+   * Who the dragon shoots: the nearest student ahead of its eye (by what it
+   * sees); nobody ahead — the one lagging furthest (by progress: a long name
+   * shifts an avatar left of its true position). Dropped and finished are safe.
+   * candidates: [{ x, progress, state }], x — avatar centre in track px,
+   * progress — 0..100 position on the track
    */
   function pickTarget(candidates, eyeX) {
     const prey = candidates.filter(c => c.state !== 'dropped' && c.state !== 'victory');
     if (prey.length === 0) return null;
     const ahead = prey.filter(c => c.x >= eyeX);
     if (ahead.length > 0) return ahead.reduce((a, b) => (b.x < a.x ? b : a));
-    return prey.reduce((a, b) => (b.x > a.x ? b : a));
+    return prey.reduce((a, b) => (b.progress < a.progress ? b : a));
   }
 
   /**
@@ -100,6 +102,7 @@
     return [...track.querySelectorAll('.student-marker[data-state]')].map(el => ({
       el,
       state: el.dataset.state,
+      progress: parseFloat(el.dataset.progress),
       x: centerIn(track, el.querySelector('.avatar') || el).x,
     }));
   }

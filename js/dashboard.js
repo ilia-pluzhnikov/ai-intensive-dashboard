@@ -209,7 +209,7 @@ function renderProgressBar() {
     html += `
       <div class="student-lane">
         <div class="student-marker state-${state} ${isLeader && !isDropped ? 'leader' : ''} ${runs ? 'running' : ''}"
-             data-state="${state}" data-final-left="${pos}%" style="left: ${runs ? 0 : pos}%; --i: ${i}">
+             data-state="${state}" data-progress="${pos}" data-final-left="${pos}%" style="left: ${runs ? 0 : pos}%; --i: ${i}">
           <div class="avatar">
             <img src="${avatarSrc}" alt="${student.name}">
           </div>

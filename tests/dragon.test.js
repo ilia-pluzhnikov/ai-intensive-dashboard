@@ -3,10 +3,10 @@ const assert = require('node:assert/strict');
 const { pickTarget, shotDelay, aimAngle, buildRig } = require('../js/dragon.js');
 
 const field = [
-  { id: 'leader', x: 900, state: 'fresh' },
-  { id: 'mid', x: 500, state: 'fresh' },
-  { id: 'slow', x: 300, state: 'stressed' },
-  { id: 'caught', x: 100, state: 'bitten' },
+  { id: 'leader', x: 900, progress: 90, state: 'fresh' },
+  { id: 'mid', x: 500, progress: 50, state: 'fresh' },
+  { id: 'slow', x: 300, progress: 30, state: 'stressed' },
+  { id: 'caught', x: 100, progress: 10, state: 'bitten' },
 ];
 
 test('pickTarget: nearest student ahead of the eye', () => {
@@ -17,8 +17,17 @@ test('pickTarget: a student exactly at the eye counts as ahead', () => {
   assert.equal(pickTarget(field, 300).id, 'slow');
 });
 
-test('pickTarget: nobody ahead → nearest one behind', () => {
-  assert.equal(pickTarget(field, 950).id, 'leader');
+test('pickTarget: nobody ahead → the one lagging furthest behind', () => {
+  assert.equal(pickTarget(field, 950).id, 'caught');
+});
+
+test('pickTarget: "lagging" means least progress, not leftmost avatar', () => {
+  // A long name shifts its avatar left of the marker's progress position
+  const c = [
+    { id: 'long-name', x: 240, progress: 35, state: 'bitten' },
+    { id: 'laggard', x: 260, progress: 20, state: 'bitten' },
+  ];
+  assert.equal(pickTarget(c, 600).id, 'laggard');
 });
 
 test('pickTarget: dropped and finished students are never targets', () => {
