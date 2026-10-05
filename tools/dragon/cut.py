@@ -20,8 +20,8 @@ CSS_OUT = ROOT / "css" / "dragon-rig.css"
 
 # Crop in source px: the silhouette (40..880 x 232..784) plus room for poses
 BOX = (20, 180, 910, 815)
-EXPORT_SCALE = 0.5    # layer files: 2x of the on-site size (retina)
-DISPLAY_SCALE = 0.25  # on-site: silhouette ~138 px tall (was ~86 px)
+EXPORT_SCALE = 0.5      # layer files: 4 px per art pixel, ≥2x of the on-site size (retina)
+DISPLAY_SCALE = 0.2125  # on-site: silhouette ~117 px tall (0.25 felt 15% too big)
 
 # Moving parts. "own" is cut out of the parent layer; "layer" is what the part
 # carries — own plus an overlap that tucks under the parent at the joint, so a
