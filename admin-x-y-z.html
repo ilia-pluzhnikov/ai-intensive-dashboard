@@ -77,6 +77,7 @@
         document.body.innerHTML = '<div style="color:#ff2a6d;text-align:center;margin-top:20%;font-family:monospace;font-size:2rem;">ACCESS DENIED</div>';
         throw new Error('Access denied');
       }
+      window.ADMIN_PASSWORD = pwd; // sent with every save, checked by the save function
     })();
   </script>
   <script src="./js/admin.js"></script>

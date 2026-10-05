@@ -2,7 +2,8 @@
  * DRAGON CHASE - Dashboard Logic
  */
 
-const DATA_URL = '/api/data';
+// Live data: written to the bucket by the save function (yandex/save-function)
+const DATA_URL = './live/data.json';
 const FALLBACK_URL = './data/cohort-1.json';
 
 // Avatar path prefix
@@ -24,13 +25,13 @@ const BONUS_POINTS = 10;
 let cohortData = null;
 
 /**
- * Load cohort data from API (with fallback to JSON file)
+ * Load live cohort data (with fallback to the JSON file from the repo)
  */
 async function loadData() {
   try {
-    let response = await fetch(DATA_URL);
+    let response = await fetch(DATA_URL + '?t=' + Date.now());
     if (!response.ok) {
-      console.log('API not available, using fallback JSON');
+      console.log('Live data not available, using fallback JSON');
       response = await fetch(FALLBACK_URL);
     }
     cohortData = await response.json();

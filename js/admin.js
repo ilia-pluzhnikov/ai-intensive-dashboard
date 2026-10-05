@@ -2,21 +2,23 @@
  * DRAGON CHASE - Admin Panel Logic
  */
 
-const DATA_URL = '/api/data';
-const SAVE_URL = '/api/save';
+// Live data lives in the bucket; saves go through the Yandex Cloud Function
+// (yandex/save-function), which checks the admin password server-side.
+const DATA_URL = './live/data.json';
+const SAVE_URL = 'https://functions.yandexcloud.net/d4ea54cu6pms73ppvbc5';
 const FALLBACK_URL = './data/cohort-1.json';
 
 let cohortData = null;
 let hasChanges = false;
 
 /**
- * Load cohort data from API (with fallback to JSON file)
+ * Load live cohort data (with fallback to the JSON file from the repo)
  */
 async function loadData() {
   try {
-    let response = await fetch(DATA_URL);
+    let response = await fetch(DATA_URL + '?t=' + Date.now());
     if (!response.ok) {
-      console.log('API not available, using fallback JSON');
+      console.log('Live data not available, using fallback JSON');
       response = await fetch(FALLBACK_URL + '?t=' + Date.now());
     }
     cohortData = await response.json();
@@ -173,10 +175,11 @@ async function saveData() {
   btn.disabled = true;
 
   try {
+    // text/plain keeps this a "simple" CORS request — no preflight
     const response = await fetch(SAVE_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(cohortData)
+      headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+      body: JSON.stringify({ password: window.ADMIN_PASSWORD, data: cohortData })
     });
 
     if (!response.ok) {

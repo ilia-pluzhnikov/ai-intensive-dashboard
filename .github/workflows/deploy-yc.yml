@@ -1,0 +1,34 @@
+name: Deploy to Yandex Cloud
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Only the files the site needs: archives, functions and docs stay out
+      # of the public bucket.
+      - name: Assemble site
+        run: |
+          mkdir -p _site/data
+          cp -r index.html admin-x-y-z.html css js assets _site/
+          cp data/cohort-1.json _site/data/
+
+      # live/ is written by the save function (yandex/save-function) —
+      # --exclude keeps --delete from wiping the checkins.
+      - name: Sync to YC Object Storage
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.YC_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.YC_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ru-central1
+        run: |
+          aws s3 sync _site/ s3://students.ilia-pro-ai.com/ \
+            --endpoint-url https://storage.yandexcloud.net \
+            --delete \
+            --exclude "live/*" \
+            --cache-control "public, max-age=0, must-revalidate"

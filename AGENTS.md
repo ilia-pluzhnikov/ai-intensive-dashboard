@@ -47,11 +47,11 @@
 ├── js/
 │   ├── dashboard.js
 │   └── admin.js
-├── netlify/
-│   └── functions/
-│       ├── get-data.js       # GET /api/data — чтение из Netlify Blobs
-│       ├── set-data.js       # POST /api/save — запись в Netlify Blobs
-│       └── init-data.js      # GET /api/init — seed начальных данных
+├── yandex/
+│   └── save-function/
+│       └── index.js          # Yandex Cloud Function: сохранение из админки → live/data.json
+├── .github/workflows/
+│   └── deploy-yc.yml         # Выкладка в бакет при push в main
 └── assets/
     ├── avatars/              # Аватары учеников
     └── *.png                 # Спрайты дракона
@@ -75,7 +75,7 @@ JSON-файл `data/cohort-1.json` содержит:
 1. Открыть `/admin-x-y-z.html`
 2. Ввести пароль
 3. Кликать по ячейкам для toggle чекинов
-4. Сохранить → данные отправляются в Netlify Blobs через `/api/save`
+4. Сохранить → данные уходят в функцию `students-dashboard-save` вместе с паролем; она проверяет пароль и пишет `live/data.json` в бакет
 
 ## Состояния аватаров
 
@@ -87,47 +87,29 @@ JSON-файл `data/cohort-1.json` содержит:
 
 ## Деплой
 
-- Хостинг: Netlify (статика + Functions)
-- Хранилище данных: Netlify Blobs
-- **Автодеплой из GitHub подключён** — `git push` в `main` триггерит билд автоматически
-- Site ID: `424adeb3-79c9-472d-a0c8-b81fae93e54d`
-- URL: https://ai-intensive-dashboard.netlify.app
-- Fallback: если API недоступен, дашборд читает локальный `data/cohort-1.json`
+С 2026-10-05 дашборд живёт в **Yandex Cloud**, а не на Netlify: Netlify из России открывается через раз, Yandex Object Storage — стабильно.
 
-## Два источника данных
+- **URL: https://students.ilia-pro-ai.com** — бакет Object Storage `students.ilia-pro-ai.com` (сайт из бакета, как у `ilia-pro-ai.com`). Каталог `b1g2163i6m5vi1lqe2tm`.
+- **HTTPS:** сертификат Let's Encrypt из Certificate Manager (`fpqdefubfirufnc5sndu`), продлевается сам через CNAME `_acme-challenge.students` → `fpqdefubfirufnc5sndu.cm.yandexcloud.net`.
+- **DNS** — Cloudflare, только DNS (серое облако): CNAME `students` → `students.ilia-pro-ai.com.website.yandexcloud.net`. `yc` DNS не управляет.
+- **Автодеплой:** `.github/workflows/deploy-yc.yml` — при `push` в `main` собирает `index.html`, `admin-x-y-z.html`, `css/`, `js/`, `assets/`, `data/cohort-1.json` и делает `aws s3 sync --delete --exclude "live/*"`. Архивы потоков, функция и доки в бакет не попадают. Ключ — сервисный аккаунт `deployer` (секреты `YC_ACCESS_KEY_ID` / `YC_SECRET_ACCESS_KEY`).
+- **Сохранение из админки:** функция `students-dashboard-save` (`yandex/save-function/index.js`, Node.js 22), вызывается по `https://functions.yandexcloud.net/d4ea54cu6pms73ppvbc5`. Пароль — в переменной окружения `ADMIN_PASSWORD`, проверяется на сервере. Пишет от имени сервисного аккаунта `students-dashboard-fn`, у которого есть только право записи в этот бакет (ACL).
+- **Старый адрес** `ai-intensive-dashboard.netlify.app` — `netlify.toml` перенаправляет его на новый (301). Netlify Blobs больше не используются.
 
-Дашборд использует **два источника**, и это важно при обновлениях:
+> ⚠️ **Локальная выкладка с Windows через `yc storage s3 cp --recursive` ломает ключи:** объекты получают имена `css\blood-dragon.css`, сайт отдаёт 404 на всё из подпапок, а `--exclude "live/*"` не срабатывает. Ещё `yc` заливает CSS и JS как `text/plain` — браузер не применит стили. Выкладывай через GitHub Action; если нужно руками — по одному файлу с явным ключом через `/` и `--content-type`.
 
-1. **Netlify Blobs** (основной) — `/api/data` читает, `/api/save` пишет. Админка работает с ним.
-2. **`data/cohort-1.json`** (fallback) — используется если API недоступен.
+## Данные: что где лежит
 
-**При изменении структуры данных** (задания, ученики, недели) нужно обновить оба:
-1. Отредактировать `data/cohort-1.json`
-2. Задеплоить статику: `netlify deploy --prod --dir=. --site=424adeb3-79c9-472d-a0c8-b81fae93e54d`
-3. Залить данные в Blobs (см. ⚠️ ниже)
+1. **`live/data.json` в бакете** (основной) — дашборд и админка читают его, функция сохранения перезаписывает. Каждое сохранение кладёт копию в `live/history/<время>.json` — откат после неудачного сохранения.
+2. **`data/cohort-1.json` в репо** (fallback) — читается, только если `live/data.json` недоступен. В нём пустые чекины.
 
-**Чекины** (галочки) обновляются только в Blobs через админку — в локальный JSON их переносить не нужно.
+**Чекины** (галочки) живут только в `live/data.json` — в локальный JSON их не переносить.
 
-> ⚠️ **НЕ делай `curl -d @data/cohort-1.json`** напрямую в `/api/save` — локальный JSON содержит пустые чекины и затрёт реальные галочки из админки!
->
-> Правильный порядок для шага 3:
-> 1. Скачать текущие данные из Blobs: `curl -s https://ai-intensive-dashboard.netlify.app/api/data > /tmp/current.json`
-> 2. Смержить структуру (weeks, students) из локального JSON с чекинами из Blobs
-> 3. Отправить смерженный результат в `/api/save`
-> 4. **Проверить с паузой ~3–4 с** (или cache-buster `?cb=<n>`): сразу после `POST` у Netlify Blobs есть короткое окно read-after-write — мгновенный `GET /api/data` может вернуть старые данные. Это не ошибка записи, а консистентность; повтор через пару секунд показывает актуальное.
->
-> Пример на Python:
-> ```python
-> import json, urllib.request
-> # Скачать текущие Blobs (с чекинами)
-> blobs = json.loads(urllib.request.urlopen('https://ai-intensive-dashboard.netlify.app/api/data').read())
-> # Прочитать локальный JSON (обновлённая структура)
-> with open('data/cohort-1.json') as f: local = json.load(f)
-> # Мерж: структура из локального, чекины из Blobs
-> local['checkins'] = blobs['checkins']
-> # Отправить
-> req = urllib.request.Request('https://ai-intensive-dashboard.netlify.app/api/save',
->     data=json.dumps(local, ensure_ascii=False).encode('utf-8'),
->     headers={'Content-Type': 'application/json'}, method='POST')
-> urllib.request.urlopen(req)
-> ```
+**При изменении структуры** (задания, ученики, недели):
+1. Отредактировать `data/cohort-1.json`, закоммитить и запушить (Action выложит статику).
+2. Смержить структуру в живые данные: скачать `https://students.ilia-pro-ai.com/live/data.json`, взять из него `checkins`, всё остальное — из локального `data/cohort-1.json`. Для нового потока переносить чекины только для id новых учеников, иначе ключи прошлого потока останутся мусором.
+3. Залить результат одним файлом:
+   `yc storage s3 cp merged.json s3://students.ilia-pro-ai.com/live/data.json --content-type "application/json; charset=utf-8" --cache-control no-cache`
+   (`yc` — `C:/Users/ilyap/yandex-cloud/bin/yc.exe`, в Git Bash не в PATH).
+
+> ⚠️ **НЕ заливай `data/cohort-1.json` в `live/data.json` как есть** — в нём пустые чекины, он затрёт галочки из админки. Если всё же случилось — последняя хорошая версия лежит в `live/history/`.

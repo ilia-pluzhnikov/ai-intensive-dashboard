@@ -1,5 +1,10 @@
+# Дашборд переехал в Yandex Cloud: https://students.ilia-pro-ai.com (см. AGENTS.md → «Деплой»).
+# Netlify остался только ради старых ссылок — всё перенаправляем на новый адрес.
 [build]
   publish = "."
 
-[functions]
-  directory = "netlify/functions"
+[[redirects]]
+  from = "/*"
+  to = "https://students.ilia-pro-ai.com/:splat"
+  status = 301
+  force = true
