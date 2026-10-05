@@ -17,6 +17,8 @@ const DRAGON_MAX = 90; // dragon reaches 90%, not 100% — rescue zone
 const BONUS_POINTS = 10;
 
 let cohortData = null;
+let hunter = null;
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /**
  * Load live cohort data (with fallback to the JSON file from the repo)
@@ -153,6 +155,7 @@ function getStudentState(studentId) {
 function renderProgressBar() {
   const track = document.getElementById('progress-track');
   if (!track) return;
+  if (hunter) hunter.stop();
 
   const dragonPos = getDragonPosition();
 
@@ -217,6 +220,16 @@ function renderProgressBar() {
   `;
 
   track.innerHTML = html;
+  startHunting(track);
+}
+
+/**
+ * Laser hunter (js/dragon.js); off when the viewer asked for less motion
+ */
+function startHunting(track) {
+  if (REDUCED_MOTION) return;
+  hunter = DragonRig.createHunter(track);
+  hunter.start();
 }
 
 /**

@@ -113,6 +113,65 @@
 /* Danger zone stops at the dragon's eye; never wider than the track */
 .danger-zone { max-width: 100%; }
 
+/* Laser: aim the head, open the jaw, flare the eye, hold the idle pose */
+.dragon-rig .head-aim {
+  transform: rotate(var(--aim, 0deg));
+  transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.dragon-rig .part.jaw { transition: transform 0.12s ease-out; }
+.dragon-rig.is-aiming .part.jaw { transform: rotate(5deg); }
+.dragon-rig.is-firing .part.jaw { transform: rotate(16deg); }
+
+.dragon-rig.is-aiming .head-idle,
+.dragon-rig.is-firing .head-idle { animation-play-state: paused; }
+
+.dragon-rig.is-aiming .eye::before,
+.dragon-rig.is-firing .eye::before {
+  animation: none;
+  opacity: 1;
+  transform: scale(1.8);
+}
+
+.dragon-rig.is-aiming .eyelid,
+.dragon-rig.is-firing .eyelid { animation: none; }
+
+.dragon-laser {
+  position: absolute;
+  height: 6px;
+  margin-top: -3px;
+  border-radius: 3px;
+  transform-origin: 0 50%;
+  background: linear-gradient(180deg, transparent, var(--neon-pink) 20%, #fff 42%, #fff 58%, var(--neon-pink) 80%, transparent);
+  box-shadow: 0 0 10px var(--neon-pink), 0 0 22px #ff0044;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 7;
+}
+
+.dragon-spark {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  background: #fff;
+  box-shadow: 0 0 6px var(--neon-pink), 0 0 10px var(--neon-pink);
+  pointer-events: none;
+  z-index: 8;
+}
+
+/* Hit lands on the img, so it never fights the avatar's own state animations */
+.student-marker .avatar img.hit { animation: avatar-hit 0.45s ease-out; }
+
+@keyframes avatar-hit {
+  0% { filter: brightness(3) saturate(0); transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { filter: brightness(2); transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+  100% { filter: none; transform: translateX(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .dragon-rig,
   .dragon-rig *,

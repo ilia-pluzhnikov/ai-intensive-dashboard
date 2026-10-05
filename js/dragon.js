@@ -14,6 +14,12 @@
   const AIM_UP_DEG = -14;
   const AIM_DOWN_DEG = 6;
 
+  // Shot phases
+  const AIM_MS = 600;
+  const BEAM_GROW_MS = 120;
+  const FIRE_MS = 700;
+  const BEAM_FADE_MS = 150;
+
   /**
    * Who the dragon shoots: the nearest student ahead of its eye;
    * nobody ahead — the nearest one behind. Dropped and finished are safe.
@@ -44,6 +50,147 @@
     return Math.max(AIM_UP_DEG, Math.min(AIM_DOWN_DEG, deg));
   }
 
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  // Centre of an element in the track's space (where absolute children live)
+  function centerIn(track, el) {
+    const t = track.getBoundingClientRect();
+    const r = el.getBoundingClientRect();
+    return {
+      x: r.left + r.width / 2 - t.left - track.clientLeft,
+      y: r.top + r.height / 2 - t.top - track.clientTop,
+    };
+  }
+
+  // The neck joint (head-aim's transform-origin) in the track's space
+  function headPivotIn(track, headAim) {
+    const t = track.getBoundingClientRect();
+    const r = headAim.getBoundingClientRect();
+    const [ox, oy] = getComputedStyle(headAim).transformOrigin.split(' ').map(parseFloat);
+    return { x: r.left + ox - t.left - track.clientLeft, y: r.top + oy - t.top - track.clientTop };
+  }
+
+  function burst(track, at, count, reach) {
+    for (let i = 0; i < count; i++) {
+      const spark = document.createElement('div');
+      spark.className = 'dragon-spark';
+      spark.style.left = at.x + 'px';
+      spark.style.top = at.y + 'px';
+      track.appendChild(spark);
+      const angle = Math.random() * Math.PI * 2;
+      const dist = reach * (0.4 + Math.random() * 0.6);
+      const anim = spark.animate([
+        { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+        { transform: `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px) scale(0.3)`, opacity: 0 },
+      ], { duration: 400 + Math.random() * 300, easing: 'cubic-bezier(0.2, 0.8, 0.4, 1)' });
+      anim.onfinish = () => spark.remove();
+    }
+  }
+
+  function hit(marker) {
+    const img = marker.querySelector('.avatar img');
+    if (!img) return;
+    img.classList.remove('hit');
+    void img.offsetWidth; // restart the animation on back-to-back hits
+    img.classList.add('hit');
+    img.addEventListener('animationend', () => img.classList.remove('hit'), { once: true });
+  }
+
+  function readCandidates(track) {
+    return [...track.querySelectorAll('.student-marker[data-state]')].map(el => ({
+      el,
+      state: el.dataset.state,
+      x: centerIn(track, el.querySelector('.avatar') || el).x,
+    }));
+  }
+
+  async function fireAt(track, rig, target) {
+    const headAim = rig.querySelector('.head-aim');
+    const eye = rig.querySelector('.eye');
+    const avatar = target.el.querySelector('.avatar') || target.el;
+
+    // 1. Aim: turn the head, flare the eye, sparks at the mouth
+    rig.style.setProperty('--aim', aimAngle(headPivotIn(track, headAim), centerIn(track, avatar)) + 'deg');
+    rig.classList.add('is-aiming');
+    burst(track, centerIn(track, eye), 5, 18);
+    await wait(AIM_MS);
+
+    // 2. Fire from where the turned head now holds the eye
+    rig.classList.replace('is-aiming', 'is-firing');
+    const from = centerIn(track, eye);
+    const to = centerIn(track, avatar);
+    const angle = Math.atan2(to.y - from.y, to.x - from.x) * 180 / Math.PI;
+    const beam = document.createElement('div');
+    beam.className = 'dragon-laser';
+    beam.style.left = from.x + 'px';
+    beam.style.top = from.y + 'px';
+    beam.style.width = Math.hypot(to.x - from.x, to.y - from.y) + 'px';
+    beam.style.transform = `rotate(${angle}deg)`;
+    track.appendChild(beam);
+    beam.animate(
+      [{ transform: `rotate(${angle}deg) scaleX(0)` }, { transform: `rotate(${angle}deg) scaleX(1)` }],
+      { duration: BEAM_GROW_MS, easing: 'ease-out' }
+    );
+    beam.animate([{ opacity: 1 }, { opacity: 0.55 }, { opacity: 1 }],
+      { duration: 90, iterations: Infinity, delay: BEAM_GROW_MS });
+
+    // 3. Hit
+    await wait(BEAM_GROW_MS);
+    hit(target.el);
+    burst(track, to, 10, 40);
+    await wait(FIRE_MS - BEAM_GROW_MS);
+
+    // 4. Fade out, head back
+    beam.getAnimations().forEach(a => a.cancel());
+    await beam.animate([{ opacity: 1 }, { opacity: 0 }], { duration: BEAM_FADE_MS }).finished;
+    beam.remove();
+    rig.classList.remove('is-firing');
+    rig.style.setProperty('--aim', '0deg');
+  }
+
+  /**
+   * Shoots the nearest prey on a random beat; idles while the tab is hidden
+   */
+  function createHunter(track) {
+    let timer = null;
+    let running = false;
+    let busy = false;
+
+    function schedule() {
+      clearTimeout(timer);
+      if (!running || document.hidden) return;
+      timer = setTimeout(shoot, shotDelay(readCandidates(track).map(c => c.state)));
+    }
+
+    async function shoot() {
+      const rig = track.querySelector('.dragon-rig');
+      if (busy || !rig) return;
+      busy = true;
+      try {
+        const eyeX = centerIn(track, rig.querySelector('.eye')).x;
+        const target = pickTarget(readCandidates(track), eyeX);
+        if (target) await fireAt(track, rig, target);
+      } finally {
+        busy = false;
+        schedule();
+      }
+    }
+
+    return {
+      start() {
+        running = true;
+        document.addEventListener('visibilitychange', schedule);
+        schedule();
+      },
+      stop() {
+        running = false;
+        clearTimeout(timer);
+        document.removeEventListener('visibilitychange', schedule);
+      },
+      shootNow: shoot,
+    };
+  }
+
   /**
    * Rig markup; paint order matches the layer order in tools/dragon/cut.py
    */
@@ -62,7 +209,7 @@
       </div>`;
   }
 
-  const api = { pickTarget, shotDelay, aimAngle, buildRig };
+  const api = { pickTarget, shotDelay, aimAngle, buildRig, createHunter };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DragonRig = api;
 })(typeof window !== 'undefined' ? window : globalThis);
