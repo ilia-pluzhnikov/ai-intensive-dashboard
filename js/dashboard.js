@@ -13,12 +13,6 @@ const AVATAR_PATH = './assets/avatars/';
 const DRAGON_EXPONENT = 1.5;
 const DRAGON_MAX = 90; // dragon reaches 90%, not 100% — rescue zone
 
-// Dragon sprite animation (asymmetric: base 3s, laser 1s)
-const DRAGON_SPRITE_BASE = './assets/Blood Dragon Sprite Base.png';
-const DRAGON_SPRITE_LASER = './assets/Blood Dragon Sprite Attack.png';
-const DRAGON_BASE_MS = 4000;
-const DRAGON_LASER_MS = 2000;
-
 // Bonus points for all students (hotfix)
 const BONUS_POINTS = 10;
 
@@ -99,10 +93,22 @@ function getMaxPoints() {
 }
 
 /**
+ * "Now" for the dragon clock; ?now=YYYY-MM-DD previews another day of the cohort
+ */
+function getNow() {
+  const param = new URLSearchParams(location.search).get('now');
+  if (param && /^\d{4}-\d{2}-\d{2}$/.test(param)) {
+    const date = new Date(param + 'T12:00:00');
+    if (!isNaN(date)) return date;
+  }
+  return new Date();
+}
+
+/**
  * Calculate dragon position (0–DRAGON_MAX%) with accelerating pace
  */
 function getDragonPosition() {
-  const now = new Date();
+  const now = getNow();
   const start = new Date(cohortData.startDate + 'T00:00:00');
   const end = new Date(cohortData.endDate + 'T23:59:59');
   if (now <= start) return 0;
@@ -148,31 +154,21 @@ function renderProgressBar() {
   const track = document.getElementById('progress-track');
   if (!track) return;
 
-  track.innerHTML = '';
-
-  // Dragon position
   const dragonPos = getDragonPosition();
 
-  // Danger zone (red area behind dragon, +8% to reach dragon's head)
-  const dangerWidth = Math.min(dragonPos + 8, 100);
-  const safeWidth = Math.max(100 - dangerWidth - 10, 0);
-  track.innerHTML += `
-    <div class="danger-zone" style="width: ${dangerWidth}%"></div>
-    <div class="safe-zone" style="width: ${safeWidth}%"></div>
+  // Danger zone reaches the dragon's eye (--dragon-reach: css/dragon-rig.css)
+  const dangerWidth = pos => `calc(${pos}% + var(--dragon-reach))`;
+  const safeWidth = pos => `calc(90% - ${pos}% - var(--dragon-reach))`;
+
+  let html = `
+    <div class="danger-zone" style="width: ${dangerWidth(dragonPos)}"></div>
+    <div class="safe-zone" style="width: ${safeWidth(dragonPos)}"></div>
     <img class="safe-zone-gift" src="assets/gift_only.png" alt="Приз">
     <div class="zone-label danger">Danger Zone</div>
     <div class="zone-label safe">Safe Zone</div>
-  `;
-
-  // Week markers
-  track.innerHTML += `
     <div class="week-markers">
       ${cohortData.weeks.map(w => `<div class="week-marker">Week ${w.week}</div>`).join('')}
     </div>
-  `;
-
-  // Finish line
-  track.innerHTML += `
     <div class="finish-line"></div>
   `;
 
@@ -184,9 +180,8 @@ function renderProgressBar() {
   // Find leader (most points)
   const leaderPoints = Math.max(...sortedStudents.map(s => getStudentPoints(s.id)));
 
-  // Student lanes
-  let lanesHtml = '<div class="student-lanes">';
-  sortedStudents.forEach((student) => {
+  html += '<div class="student-lanes">';
+  sortedStudents.forEach((student, i) => {
     const pos = getStudentPosition(student.id);
     const state = getStudentState(student.id);
     const avatarSrc = AVATAR_PATH + student.avatar;
@@ -195,9 +190,10 @@ function renderProgressBar() {
 
     const isDropped = state === 'dropped';
     const inDanger = !isDropped && (state === 'stressed' || state === 'bitten');
-    lanesHtml += `
+    html += `
       <div class="student-lane">
-        <div class="student-marker state-${state} ${isLeader && !isDropped ? 'leader' : ''}" style="left: ${pos}%">
+        <div class="student-marker state-${state} ${isLeader && !isDropped ? 'leader' : ''}"
+             data-state="${state}" style="left: ${pos}%; --i: ${i}">
           <div class="avatar">
             <img src="${avatarSrc}" alt="${student.name}">
           </div>
@@ -209,37 +205,18 @@ function renderProgressBar() {
       </div>
     `;
   });
-  lanesHtml += '</div>';
-  track.innerHTML += lanesHtml;
+  html += '</div>';
 
-  // Dragon with 2-frame sprite animation
-  track.innerHTML += `
+  // Living dragon: cutout rig (js/dragon.js)
+  html += `
     <div class="dragon-lane">
       <div class="dragon" style="left: ${dragonPos}%">
-        <img id="dragon-sprite" src="${DRAGON_SPRITE_BASE}" alt="Dragon">
+        ${DragonRig.buildRig()}
       </div>
     </div>
   `;
 
-  startDragonAnimation();
-}
-
-let dragonAnimTimer = null;
-function startDragonAnimation() {
-  if (dragonAnimTimer) clearTimeout(dragonAnimTimer);
-  function showBase() {
-    const img = document.getElementById('dragon-sprite');
-    if (!img) return;
-    img.src = DRAGON_SPRITE_BASE;
-    dragonAnimTimer = setTimeout(showLaser, DRAGON_BASE_MS);
-  }
-  function showLaser() {
-    const img = document.getElementById('dragon-sprite');
-    if (!img) return;
-    img.src = DRAGON_SPRITE_LASER;
-    dragonAnimTimer = setTimeout(showBase, DRAGON_LASER_MS);
-  }
-  dragonAnimTimer = setTimeout(showLaser, DRAGON_BASE_MS);
+  track.innerHTML = html;
 }
 
 /**

@@ -44,7 +44,25 @@
     return Math.max(AIM_UP_DEG, Math.min(AIM_DOWN_DEG, deg));
   }
 
-  const api = { pickTarget, shotDelay, aimAngle };
+  /**
+   * Rig markup; paint order matches the layer order in tools/dragon/cut.py
+   */
+  function buildRig() {
+    return `
+      <div class="dragon-rig" aria-hidden="true">
+        <div class="part tail"><div class="glow"></div></div>
+        <div class="part body"><div class="glow"></div></div>
+        <div class="head-aim"><div class="head-idle">
+          <div class="part mouth"></div>
+          <div class="part jaw"></div>
+          <div class="part head"><div class="glow"></div></div>
+          <div class="eye"><div class="eyelid"></div></div>
+        </div></div>
+        <div class="part hand"></div>
+      </div>`;
+  }
+
+  const api = { pickTarget, shotDelay, aimAngle, buildRig };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DragonRig = api;
 })(typeof window !== 'undefined' ? window : globalThis);

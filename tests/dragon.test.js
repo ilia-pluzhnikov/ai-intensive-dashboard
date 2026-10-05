@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { pickTarget, shotDelay, aimAngle } = require('../js/dragon.js');
+const { pickTarget, shotDelay, aimAngle, buildRig } = require('../js/dragon.js');
 
 const field = [
   { id: 'leader', x: 900, state: 'fresh' },
@@ -71,4 +71,15 @@ test('aimAngle: below is clamped to 6° down', () => {
 
 test('aimAngle: target behind and above never flips the head', () => {
   assert.equal(aimAngle({ x: 0, y: 0 }, { x: -100, y: -50 }), -14);
+});
+
+test('buildRig: parts paint in the layer order of tools/dragon/cut.py', () => {
+  const order = [...buildRig().matchAll(/class="part (\w+)"/g)].map(m => m[1]);
+  assert.deepEqual(order, ['tail', 'body', 'mouth', 'jaw', 'head', 'hand']);
+});
+
+test('buildRig: has the neck joint it aims with and the eye the laser leaves', () => {
+  const html = buildRig();
+  assert.match(html, /class="head-aim"/);
+  assert.match(html, /class="eye"/);
 });
