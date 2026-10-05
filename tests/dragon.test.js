@@ -22,7 +22,7 @@ test('pickTarget: nobody ahead → the one lagging furthest behind', () => {
 });
 
 test('pickTarget: "lagging" means least progress, not leftmost avatar', () => {
-  // A long name shifts its avatar left of the marker's progress position
+  // Rank by data, not pixels: x is only where the avatar happens to be drawn
   const c = [
     { id: 'long-name', x: 240, progress: 35, state: 'bitten' },
     { id: 'laggard', x: 260, progress: 20, state: 'bitten' },

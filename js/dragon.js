@@ -22,8 +22,8 @@
 
   /**
    * Who the dragon shoots: the nearest student ahead of its eye (by what it
-   * sees); nobody ahead — the one lagging furthest (by progress: a long name
-   * shifts an avatar left of its true position). Dropped and finished are safe.
+   * sees); nobody ahead — the one lagging furthest (by progress, the data, not
+   * by where the avatar happens to be drawn). Dropped and finished are safe.
    * candidates: [{ x, progress, state }], x — avatar centre in track px,
    * progress — 0..100 position on the track
    */

@@ -17,6 +17,9 @@ const DRAGON_MAX = 90; // dragon reaches 90%, not 100% — rescue zone
 const INTRO_MS = 2000;
 const INTRO_STAGGER_MS = 80;
 
+// From this position (%) the name hangs left of the avatar, so it never runs past the finish
+const NAME_FLIP_AT = 75;
+
 // Bonus points for all students (hotfix)
 const BONUS_POINTS = 10;
 
@@ -208,7 +211,7 @@ function renderProgressBar() {
     const runs = playIntro && pos > 0 && !isDropped;
     html += `
       <div class="student-lane">
-        <div class="student-marker state-${state} ${isLeader && !isDropped ? 'leader' : ''} ${runs ? 'running' : ''}"
+        <div class="student-marker state-${state} ${isLeader && !isDropped ? 'leader' : ''} ${runs ? 'running' : ''} ${pos >= NAME_FLIP_AT ? 'name-left' : ''}"
              data-state="${state}" data-progress="${pos}" data-final-left="${pos}%" style="left: ${runs ? 0 : pos}%; --i: ${i}">
           <div class="avatar">
             <img src="${avatarSrc}" alt="${student.name}">

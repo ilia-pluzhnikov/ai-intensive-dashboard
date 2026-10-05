@@ -332,15 +332,13 @@ header .subtitle {
 
 /* Dragon itself: css/dragon.css */
 
-/* Student avatars on track */
+/* Student avatars on track. The marker box is the avatar alone, so its centre
+   is exactly the progress position; the name hangs beside it out of flow
+   (a long name used to drag the avatar left of where the student really is) */
 .student-marker {
   position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
   z-index: 5;
   transition: left 0.5s ease-out;
 }
@@ -378,11 +376,22 @@ header .subtitle {
 }
 
 .student-marker .name {
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 8px);
+  transform: translateY(-50%);
   font-size: 0.7rem;
   color: var(--text-primary);
   text-transform: uppercase;
   white-space: nowrap;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+/* Near the finish (NAME_FLIP_AT in js/dashboard.js) the name goes left of the
+   avatar — once the intro run is over, so it never trails off the start line */
+.student-marker.name-left:not(.running) .name {
+  left: auto;
+  right: calc(100% + 8px);
 }
 
 /* Avatar states */
