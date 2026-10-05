@@ -152,7 +152,7 @@
   }
 
   /**
-   * Shoots the nearest prey on a random beat; idles while the tab is hidden
+   * Shoots the target pickTarget chooses on a random beat; idles while the tab is hidden
    */
   function createHunter(track) {
     let timer = null;

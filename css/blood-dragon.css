@@ -385,13 +385,18 @@ header .subtitle {
   text-transform: uppercase;
   white-space: nowrap;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  transition: opacity 0.25s ease-out;
 }
 
-/* Near the finish (NAME_FLIP_AT in js/dashboard.js) the name goes left of the
-   avatar — once the intro run is over, so it never trails off the start line */
-.student-marker.name-left:not(.running) .name {
+/* Near the finish (NAME_FLIP_AT in js/dashboard.js) the name goes left of the avatar */
+.student-marker.name-left .name {
   left: auto;
   right: calc(100% + 8px);
+}
+
+/* Intro run: names show up on landing, so none trails off the start or past the finish */
+.student-marker.running .name {
+  opacity: 0;
 }
 
 /* Avatar states */
