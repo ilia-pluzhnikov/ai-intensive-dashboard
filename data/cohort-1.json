@@ -5,7 +5,6 @@
   "students": [
     { "id": "artur_photofominykh", "name": "Артур · PhotoFominykh", "avatar": "Avatar Male 1.webp" },
     { "id": "vladislav_qwer6890", "name": "Владислав", "avatar": "Avatar Male 2.webp" },
-    { "id": "sergey_nonametrick", "name": "Сергей", "avatar": "Avatar Male 3.webp" },
     { "id": "artur_vlasov", "name": "Артур · ArturVlasov", "avatar": "Avatar Male 4.webp" },
     { "id": "andrei_kononov", "name": "Андрей", "avatar": "Avatar Male 5.webp" },
     { "id": "radmir_rider_skyray", "name": "Радмир", "avatar": "Avatar Male 6.webp" },
@@ -206,7 +205,6 @@
   "checkins": {
     "artur_photofominykh": [],
     "vladislav_qwer6890": [],
-    "sergey_nonametrick": [],
     "artur_vlasov": [],
     "andrei_kononov": [],
     "radmir_rider_skyray": [],
